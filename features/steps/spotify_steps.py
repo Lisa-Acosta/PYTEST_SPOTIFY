@@ -3,66 +3,67 @@ import requests
 import time
 import json
 import logging
+from token_manager import get_access_token
+import os
 
-# Token temporal pegado a mano
-ACCESS_TOKEN = "BQA1ze2G3iuYB0VTGCfnFc9Wmutt4QW7ALHhba5Vv1LNeDAGm9aeLPJuBrFRw2By6zu8zDq14uaT261eqrnMIdCQi62DqUKia7Z2Hb_xjwv30k27YDKm8IDj_1w6CKf0aQoakLNXSP4BTwcvrBTpmXEZo7XwSl-nw9CagBYgWLQc1I6mh8D0HbbSDuoegQVuo1x7OdxEqYQEAMrT0UMyybZPfLOw6s4m7VHLPfWzGg"
+# Token temporal de .env
+REFRESH_TOKEN = os.getenv("SPOTIFY_REFRESH_TOKEN")
 
+# Configuración de logging
 logging.basicConfig(filename="spotify_responses.log", level=logging.INFO, encoding="utf-8")
 
+# Helper para imprimir y loguear respuestas
 def print_json_response(response):
     try:
         content = json.dumps(response.json(), indent=2, ensure_ascii=False)
     except ValueError:
         content = f"Respuesta no JSON: {response.text}"
-    print(content)  # Para ver si usás --no-capture
+    print(content)  # Para --no-capture
     logging.info(content)
+
+# Helper para construir headers con token
+def get_headers(token):
+    return {"Authorization": f"Bearer {token}"}
+
+# Helper para requests a Spotify
+def spotify_request(method, endpoint, token, **kwargs):
+    url = f"https://api.spotify.com/v1/{endpoint}"
+    response = requests.request(method, url, headers=get_headers(token), **kwargs)
+    print_json_response(response)
+    return response
+
+#@given('tengo un token valido')
+#def step_given_token(context):
+    # Obtiene un token renovado si el actual está vencido
+    #context.token = get_access_token()
 
 @given('tengo un token valido')
 def step_impl(context):
-    context.token = ACCESS_TOKEN
+    context.token = REFRESH_TOKEN
 
 @when('consulto la playlist con ID "{playlist_id}"')
-def step_impl(context, playlist_id):
-    url = f"https://api.spotify.com/v1/playlists/{playlist_id}"
-    headers = {"Authorization": f"Bearer {context.token}"}
-    context.response = requests.get(url, headers=headers)
-    print_json_response(context.response)
-
+def step_get_playlist(context, playlist_id):
+    context.response = spotify_request("GET", f"playlists/{playlist_id}", context.token)
 
 @when('consulto el artista con ID "{artist_id}"')
-def step_impl(context, artist_id):
-    url = f"https://api.spotify.com/v1/artists/{artist_id}"
-    headers = {"Authorization": f"Bearer {context.token}"}
-    context.response = requests.get(url, headers=headers)
-    print_json_response(context.response)
-
+def step_get_artist(context, artist_id):
+    context.response = spotify_request("GET", f"artists/{artist_id}", context.token)
 
 @when('consulto la cancion con ID "{track_id}"')
-def step_impl(context, track_id):
-    url = f"https://api.spotify.com/v1/tracks/{track_id}"
-    headers = {"Authorization": f"Bearer {context.token}"}
-    context.response = requests.get(url, headers=headers)
-    print_json_response(context.response)
-
+def step_get_track(context, track_id):
+    context.response = spotify_request("GET", f"tracks/{track_id}", context.token)
 
 @when('reproduzco la cancion con URI "{track_uri}"')
-def step_impl(context, track_uri):
-    url = "https://api.spotify.com/v1/me/player/play"
-    headers = {"Authorization": f"Bearer {context.token}"}
+def step_play_song(context, track_uri):
     data = {"uris": [track_uri]}
-    context.response = requests.put(url, headers=headers, json=data)
-    print_json_response(context.response)
-    time.sleep(30)  # Espera 30 segundos antes de continuar
+    context.response = spotify_request("PUT", "me/player/play", context.token, json=data)
+    time.sleep(25)  # Espera de reproducción
 
-@then("debo poder pausarla")
+@then("puedo pausarla")
 def step_pause_song(context):
-    url = "https://api.spotify.com/v1/me/player/pause"
-    headers = {"Authorization": f"Bearer {context.token}"}
-    response = requests.put(url, headers=headers)
-    print_json_response(response)
+    response = spotify_request("PUT", "me/player/pause", context.token)
     assert response.status_code in [200, 204], f"No se pudo pausar: {response.status_code} - {response.text}"
 
-@then('la respuesta debe tener codigo 200')
-def step_impl(context):
-    print_json_response(context.response)
+@then('la respuesta tiene codigo 200')
+def step_status_200(context):
     assert context.response.status_code == 200, f"Código devuelto: {context.response.status_code}"

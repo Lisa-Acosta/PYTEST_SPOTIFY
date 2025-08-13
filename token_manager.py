@@ -1,6 +1,13 @@
 import base64
 import requests
-from config import CLIENT_ID, CLIENT_SECRET, REFRESH_TOKEN
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+CLIENT_ID = os.getenv("SPOTIFY_CLIENT_ID")
+CLIENT_SECRET = os.getenv("SPOTIFY_CLIENT_SECRET")
+REFRESH_TOKEN = os.getenv("SPOTIFY_REFRESH_TOKEN")
 
 def get_access_token():
     url = "https://accounts.spotify.com/api/token"
@@ -19,6 +26,8 @@ def get_access_token():
 
     response = requests.post(url, data=payload, headers=headers)
     if response.status_code != 200:
+        print("Status code:", response.status_code)
+        print("Response body:", response.text)
         raise Exception(f"Error al renovar token: {response.text}")
 
     return response.json()["access_token"]
