@@ -18,7 +18,6 @@ Automatización de la API de Spotify con Python y Pytest para el trabajo final d
     - [Ejecutar el proyecto principal](#ejecutar-el-proyecto-principal)
   - [🧪 Ejemplos](#-ejemplos)
   - [⚙️ Configuración](#️-configuración)
-  - [🤝 Contribuir](#-contribuir)
 
 ## ✨ Características
 
@@ -87,14 +86,4 @@ Puedes encontrar ejemplos de pruebas en la carpeta `steps/`.
 ## ⚙️ Configuración
 
 Asegúrate de completar el archivo `.env` con tus credenciales de la API de Spotify.
-
-## 🤝 Contribuir
-
-Las contribuciones son bienvenidas. Para contribuir:
-
-1. Haz fork del proyecto
-2. Crea una rama para tu feature (`git checkout -b feature/NuevaCaracteristica`)
-3. Commit tus cambios (`git commit -m 'Añadir nueva característica'`)
-4. Push a la rama (`git push origin feature/NuevaCaracteristica`)
-5. Abre un Pull Request
 
