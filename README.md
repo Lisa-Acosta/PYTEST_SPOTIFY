@@ -4,15 +4,21 @@ Automatización de la API de Spotify con Python y Pytest para el trabajo final d
 
 ## 📋 Tabla de Contenidos
 
-- [Características](#características)
-- [Requisitos Previos](#requisitos-previos)
-- [Instalación](#instalación)
-- [Uso](#uso)
-- [Ejemplos](#ejemplos)
-- [Configuración](#configuración)
-- [Contribuir](#contribuir)
-- [Licencia](#licencia)
-- [Contacto](#contacto)
+- [Spotify API Automation](#spotify-api-automation)
+  - [📋 Tabla de Contenidos](#-tabla-de-contenidos)
+  - [✨ Características](#-características)
+  - [🔧 Requisitos Previos](#-requisitos-previos)
+    - [Crear y activar entorno virtual](#crear-y-activar-entorno-virtual)
+  - [🚀 Instalación](#-instalación)
+    - [Clonar el repositorio](#clonar-el-repositorio)
+    - [Instalar dependencias](#instalar-dependencias)
+    - [Configurar variables de entorno](#configurar-variables-de-entorno)
+  - [💻 Uso](#-uso)
+    - [Ejecutar pruebas](#ejecutar-pruebas)
+    - [Ejecutar el proyecto principal](#ejecutar-el-proyecto-principal)
+  - [🧪 Ejemplos](#-ejemplos)
+  - [⚙️ Configuración](#️-configuración)
+  - [🤝 Contribuir](#-contribuir)
 
 ## ✨ Características
 
@@ -76,7 +82,7 @@ python main.py
 
 ## 🧪 Ejemplos
 
-Puedes encontrar ejemplos de pruebas en la carpeta `tests/`.
+Puedes encontrar ejemplos de pruebas en la carpeta `steps/`.
 
 ## ⚙️ Configuración
 
@@ -92,32 +98,3 @@ Las contribuciones son bienvenidas. Para contribuir:
 4. Push a la rama (`git push origin feature/NuevaCaracteristica`)
 5. Abre un Pull Request
 
-### Guías de contribución
-
-- Sigue las convenciones de código del proyecto
-- Añade tests para nuevas funcionalidades
-- Actualiza la documentación según sea necesario
-
-## 🙏 Agradecimientos
-
-- [Recurso o persona que te ayudó](https://ejemplo.com)
-- [Librería o herramienta utilizada](https://ejemplo.com)
-- [Inspiración o referencia](https://ejemplo.com)
-
-## 📊 Estado del Proyecto
-
-![Build Status](https://img.shields.io/badge/build-passing-brightgreen)
-![Coverage](https://img.shields.io/badge/coverage-95%25-brightgreen)
-![Version](https://img.shields.io/badge/version-1.0.0-blue)
-![License](https://img.shields.io/badge/license-MIT-green)
-
-## 🗺️ Roadmap
-
-- [x] Automatización de pruebas básicas
-- [ ] Integración continua
-- [ ] Mejoras en la cobertura de pruebas
-- [ ] Documentación avanzada
-
-## 📞 Contacto
-
-Para dudas o sugerencias,

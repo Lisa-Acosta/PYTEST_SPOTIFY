@@ -3,11 +3,14 @@ import requests
 import time
 import json
 import logging
-from token_manager import get_access_token
 import os
+from dotenv import load_dotenv
+
+# Cargar variables de entorno
+load_dotenv()
 
 # Token temporal de .env
-REFRESH_TOKEN = os.getenv("SPOTIFY_REFRESH_TOKEN")
+REFRESH_TOKEN = os.getenv('SPOTIFY_REFRESH_TOKEN', '').strip()
 
 # Configuración de logging
 logging.basicConfig(filename="spotify_responses.log", level=logging.INFO, encoding="utf-8")
@@ -32,11 +35,6 @@ def spotify_request(method, endpoint, token, **kwargs):
     print_json_response(response)
     return response
 
-#@given('tengo un token valido')
-#def step_given_token(context):
-    # Obtiene un token renovado si el actual está vencido
-    #context.token = get_access_token()
-
 @given('tengo un token valido')
 def step_impl(context):
     context.token = REFRESH_TOKEN
@@ -57,7 +55,7 @@ def step_get_track(context, track_id):
 def step_play_song(context, track_uri):
     data = {"uris": [track_uri]}
     context.response = spotify_request("PUT", "me/player/play", context.token, json=data)
-    time.sleep(25)  # Espera de reproducción
+    time.sleep(20)  # Espera de reproducción
 
 @then("puedo pausarla")
 def step_pause_song(context):
