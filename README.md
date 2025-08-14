@@ -15,7 +15,6 @@ Automatización de la API de Spotify con Python y Pytest para el trabajo final d
     - [Configurar variables de entorno](#configurar-variables-de-entorno)
   - [💻 Uso](#-uso)
     - [Ejecutar pruebas](#ejecutar-pruebas)
-    - [Ejecutar el proyecto principal](#ejecutar-el-proyecto-principal)
   - [🧪 Ejemplos](#-ejemplos)
   - [⚙️ Configuración](#️-configuración)
 
@@ -32,6 +31,7 @@ Antes de comenzar, asegúrate de tener:
 
 - Python 3.8 o superior instalado
 - Una cuenta de Spotify para obtener credenciales de API
+- Si quieres ejecutar todos los endpoints de la Api, también tienes que tener una cuenta de Spotify Premium
 
 ### Crear y activar entorno virtual
 
@@ -70,13 +70,7 @@ cp .env.example .env
 ### Ejecutar pruebas
 
 ```bash
-pytest
-```
-
-### Ejecutar el proyecto principal
-
-```bash
-python main.py
+behave 
 ```
 
 ## 🧪 Ejemplos
@@ -86,4 +80,5 @@ Puedes encontrar ejemplos de pruebas en la carpeta `steps/`.
 ## ⚙️ Configuración
 
 Asegúrate de completar el archivo `.env` con tus credenciales de la API de Spotify.
+
 
